@@ -1,18 +1,18 @@
 <template>
   <div class="container" style="max-width: 600px">
     <!-- Heading -->
-    <h2 class="text-center mt-5">-My To-do App-</h2>
+    <h2 class="text-center mt-5">-Mi App de Tareas-</h2>
 
     <!-- Input -->
-    <div class="d-flex mt-5">
+    <div class="d-flex mt-5 text-center">
       <input
         type="text"
         v-model="task"
-        placeholder="Enter task"
+        placeholder="Ingresa Tarea"
         class="w-100 form-control text-center"
       />
       <button class="btn btn-warning rounded-0" @click="submitTask">
-        SUBMIT
+        AGREGAR
       </button>
     </div>
 
@@ -20,8 +20,8 @@
     <table class="table table-bordered mt-5 text-center">
       <thead>
         <tr>
-          <th scope="col">Task</th>
-          <th scope="col" style="width: 120px">Status</th>
+          <th scope="col">Tarea</th>
+          <th scope="col" style="width: 120px">Estado</th>
           <th scope="col" class="text-center">#</th>
           <th scope="col" class="text-center">#</th>
         </tr>
@@ -29,7 +29,7 @@
       <tbody>
         <tr v-for="(task, index) in tasks" :key="index">
           <td>
-            <span :class="{ 'line-through': task.status === 'finished' }">
+            <span :class="{ 'line-through': task.status === 'Terminada' }">
               {{ task.name }}
             </span>
           </td>
@@ -38,9 +38,9 @@
               class="pointer noselect"
               @click="changeStatus(index)"
               :class="{
-                'text-danger': task.status === 'to-do',
-                'text-success': task.status === 'finished',
-                'text-warning': task.status === 'in-progress',
+                'text-danger': task.status === 'Para hacer',
+                'text-success': task.status === 'Terminada',
+                'text-warning': task.status === 'En proceso',
               }"
             >
               {{ capitalizeFirstChar(task.status) }}
@@ -72,20 +72,20 @@ export default {
     return {
       task: "",
       editedTask: null,
-      statuses: ["to-do", "in-progress", "finished"],
+      statuses: ["Para hacer", "En proceso", "Terminada"],
       /* Status could be: 'to-do' / 'in-progress' / 'finished' */
       tasks: [
         {
-          name: "Start the art in the school",
-          status: "to-do",
+          name: "Iniciar mi practica de arte avanzado",
+          status: "Para hacer",
         },
         {
-          name: "Do Yoga and mediate",
-          status: "in-progress",
+          name: "Hacer yoga y meditar 10min",
+          status: "En proceso",
         },
         {
-          name: "Create a web page",
-          status: "finished",
+          name: "Crear una pagina web para el negocio",
+          status: "Terminada",
         },
       ],
     };
@@ -131,7 +131,7 @@ export default {
         /* We need to add new task */
         this.tasks.push({
           name: this.task,
-          status: "todo",
+          status: "nuevo estado",
         });
       }
       this.task = "";
